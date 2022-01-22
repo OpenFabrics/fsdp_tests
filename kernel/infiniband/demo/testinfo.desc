@@ -1,0 +1,9 @@
+Owner:           Afom Michael <tmichael@redhat.com>
+Name:            /kernel/infiniband/demo
+TestVersion:     0.1
+Path:            /mnt/tests/kernel/infiniband/demo
+Description:     simple rdma test for fsdp demo
+Type:            demo_only
+RunFor:          demo
+Priority:        Normal
+Destructive:     no
