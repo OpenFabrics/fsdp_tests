@@ -3,8 +3,10 @@ Name:            /kernel/infiniband/demo
 TestVersion:     0.1
 Path:            /mnt/tests/kernel/infiniband/demo
 Description:     simple rdma test for fsdp demo
-Type:            demo_only
+Type:            fsdp_simple_demo
+TestTime:        1h
 RunFor:          demo
 Priority:        Normal
+License:         GPLv2+
 Destructive:     no
 Releases:        -RHEL Fedora

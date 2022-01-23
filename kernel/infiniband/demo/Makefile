@@ -24,4 +24,6 @@ $(METADATA): Makefile
 	@echo "Name:            $(TEST)" >> $(METADATA)
 	@echo "TestVersion:     $(TESTVERSION)" >> $(METADATA)
 	@echo "Path:            $(TEST_DIR)" >> $(METADATA)
-	@echo "Description:     none" >> $(METADATA)
+	@echo "Description:     fsdp webinar demo" >> $(METADATA)
+	@echo "TestTime:        1h" >> $(METADATA)
+	@echo "License:         GPLv2+" >> $(METADATA)
