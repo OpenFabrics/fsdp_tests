@@ -9,4 +9,4 @@ RunFor:          demo
 Priority:        Normal
 License:         GPLv2+
 Destructive:     no
-Releases:        -RHEL Fedora
+Releases:        -RHEL -Fedora
