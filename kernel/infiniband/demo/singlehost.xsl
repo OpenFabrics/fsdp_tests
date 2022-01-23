@@ -43,6 +43,10 @@
         </hostRequires>
         <partitions/>
         <task name="/distribution/check-install" role="STANDALONE"/>
+        <task name="/kernel/infiniband/demo" role="STANDALONE">
+          <fetch url="https://github.com/OpenFabrics/fsdp_tests#infiniband/demo"/>
+	  <params/>
+        </task>
         <task name="/distribution/reservesys" role="STANDALONE">
           <params>
             <param name="RESERVETIME" value="86400"/>

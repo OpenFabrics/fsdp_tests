@@ -32,18 +32,18 @@
 	<description>OS distribution arch</description>
       </arg>
       <arg section="recipe" type="string">
-        <name short="h1">host1</name>
-	<metavar>HOST1</metavar>
-	<tag type="attribute" attrname="host">distro</tag>
+        <name short="s">server</name>
+	<metavar>SERVER</metavar>
+	<tag type="attribute" attrname="server">distro</tag>
 	<default>node-01.ofa.iol.unh.edu</default>
-	<description>Test host1 FQDN</description>
+	<description>Test server FQDN</description>
       </arg>
       <arg section="recipe" type="string">
-        <name short="h2">host2</name>
-	<metavar>HOST2</metavar>
-	<tag type="attribute" attrname="host">distro</tag>
+        <name short="c">client</name>
+	<metavar>CLIENT</metavar>
+	<tag type="attribute" attrname="client">distro</tag>
 	<default>node-02.ofa.iol.unh.edu</default>
-	<description>Test host2 FQDN</description>
+	<description>Test client FQDN</description>
       </arg>
       <arg section="recipe" type="string">
         <name short="k">kickstart</name>
