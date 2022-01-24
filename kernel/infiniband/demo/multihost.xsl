@@ -36,7 +36,7 @@
 	<hostRequires>
           <and>
 	    <hostname op="=">
-              <xsl:attribute name="value"><xsl:value-of select="distro/@host1"/></xsl:attribute>
+              <xsl:attribute name="value"><xsl:value-of select="distro/@server"/></xsl:attribute>
             </hostname>
 	    <system_type op="=" value="Machine"/>
 	  </and>
@@ -78,7 +78,7 @@
 	<hostRequires>
           <and>
 	    <hostname op="=">
-              <xsl:attribute name="value"><xsl:value-of select="distro/@host2"/></xsl:attribute>
+              <xsl:attribute name="value"><xsl:value-of select="distro/@client"/></xsl:attribute>
             </hostname>
 	    <system_type op="=" value="Machine"/>
 	  </and>
