@@ -31,8 +31,8 @@
 	    <distro_arch op="=">
               <xsl:attribute name="value"><xsl:value-of select="distro/@arch"/></xsl:attribute>
 	    </distro_arch>
-	</and> 
-        </distroRequires>
+	</and>
+  </distroRequires>
 	<hostRequires>
           <and>
 	    <hostname op="=">
@@ -73,8 +73,8 @@
 	    <distro_arch op="=">
               <xsl:attribute name="value"><xsl:value-of select="distro/@arch"/></xsl:attribute>
 	    </distro_arch>
-	</and> 
-        </distroRequires>
+	</and>
+  </distroRequires>
 	<hostRequires>
           <and>
 	    <hostname op="=">
@@ -97,4 +97,4 @@
       </recipe>
     </recipeSet>
   </xsl:template>
-</xsl:stylesheet>      
+</xsl:stylesheet>
