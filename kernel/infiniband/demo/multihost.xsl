@@ -32,7 +32,7 @@
               <xsl:attribute name="value"><xsl:value-of select="distro/@arch"/></xsl:attribute>
 	    </distro_arch>
 	</and>
-        </distroRequires>
+  </distroRequires>
 	<hostRequires>
           <and>
 	    <hostname op="=">
@@ -74,7 +74,7 @@
               <xsl:attribute name="value"><xsl:value-of select="distro/@arch"/></xsl:attribute>
 	    </distro_arch>
 	</and>
-        </distroRequires>
+  </distroRequires>
 	<hostRequires>
           <and>
 	    <hostname op="=">
