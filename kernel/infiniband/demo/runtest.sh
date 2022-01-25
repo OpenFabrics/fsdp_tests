@@ -61,7 +61,7 @@ else
 fi
 
 # report the overall result to Beaker
-report_result "${TEST}" "${overall_result}" 0
+report_result "${TEST}" "${TEST_STATUS}" 0
 rhts-submit-log -l $OUTPUTFILE
 
 exit $overall_result
