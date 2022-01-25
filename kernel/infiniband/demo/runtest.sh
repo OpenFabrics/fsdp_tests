@@ -1,5 +1,11 @@
 #!/bin/bash -x
 
+# Save STDOUT and STDERR, and redirect everything to a file
+output_log_name=$(basename $TEST)
+OUTPUTFILE=$(mktemp -p /mnt/testarea tmp.${output_log_name}.XXXX)
+exec 5>&1 6>&2
+exec >> "${OUTPUTFILE}" 2>&1
+
 overall_result=0
 RUN_NUMBER=1
 
