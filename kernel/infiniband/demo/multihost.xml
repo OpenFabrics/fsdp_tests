@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <jobConfig>
-  <name>RDMA provisioning test</name>
+  <name>FSDP demo of a simple RDMA test</name>
   <xslt>multihost.xsl</xslt>
     <arguments>
       <arg section="recipe" type="string">

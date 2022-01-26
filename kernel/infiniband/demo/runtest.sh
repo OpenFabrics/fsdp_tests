@@ -34,6 +34,8 @@ if hostname -A | grep ${CLIENTS%%.*} > /dev/null; then
         overall_result=$((overall_result + 1))
         echo "iproute not installed"
     fi
+    echo ""
+    ip address show
     rhts_sync_set -s "client-done-${RUN_NUMBER}"
 elif hostname -A | grep ${SERVERS%%.*} > /dev/null; then
     rhts_sync_set -s "server-ready-${RUN_NUMBER}"
@@ -57,6 +59,8 @@ elif hostname -A | grep ${SERVERS%%.*} > /dev/null; then
         overall_result=$((overall_result + 1))
         echo "iproute not installed"
     fi
+    echo ""
+    ip address show
     rhts_sync_block -s "client-done-${RUN_NUMBER}" ${CLIENTS}
 fi
 
@@ -65,6 +69,8 @@ if [[ $overall_result -eq 0 ]]; then
 else
     TEST_STATUS="FAIL"
 fi
+
+echo "Overall test $TEST_STATUS"
 
 # report the overall result to Beaker
 report_result "${TEST}" "${TEST_STATUS}" 0
