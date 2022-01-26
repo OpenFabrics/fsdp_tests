@@ -4,7 +4,11 @@
 
   <xsl:template match="/submit">
     <job retention_tag="scratch">
-      <whiteboard>Provision server for 1-hr</whiteboard>
+      <whiteboard>
+        <xsl:choose><xsl:when test="whiteboard = ''">FSDP Cluster - provision and test
+        </xsl:when><xsl:otherwise><xsl:value-of select="whiteboard"/>
+        </xsl:otherwise></xsl:choose>
+      </whiteboard>
       <xsl:apply-templates select="recipe"/>
     </job>
   </xsl:template>
