@@ -1,0 +1,46 @@
+## Purpose
+
+The env_setup task is to be run after /distribution/check-install but
+before any /kernel/infiniband/* test case.
+
+The goal of env_setup is to prepare hosts with environment variables that
+supplies all information needed for /kernel/infiniband/* test cases and
+ensures that the RDMA network is up and sane.
+
+The env_setup task requires that user specifies two
+parameters:
+  RDMA_DRIVER - the IB driver to test over
+                examples: mlx5, cxgb4, hfi1
+  RDMA_NETWORK - the network to perform test communications over
+                 examples: ib0, roce, iw, opa0
+
+Note: a job XML/XSL is provided in this directory.  However, this
+      task should *rarely* be submitted on its own.  Instead,
+      continue to submit IB test cases by submitting them from their
+      own directory, as they will all include the env_setup task
+      and the RDMA_NETWORK / RDMA_DRIVER flags.
+
+
+## Where/How to run
+
+Continue to run all other IB tests as normal, now with the ability
+to add the following flags to bkr workflow-xslt commands:
+   -i <driver> -e <network>
+
+If running this case manually, you should:
+  * Change directory to /mnt/tests/kernel/infiniband/ofa-fsdp/env_setup:
+      $ cd /mnt/tests/kernel/infiniband/ofa-fsdp/env_setup
+  * Either define CLIENTS and SERVERS in your .bashrc or from the command line, eg:
+      $ export SERVERS="node-01"
+      $ export CLIENTS="node-02"
+  * From the command line, run one of the following:
+    1. $ ENV_NETWORK=<network> ENV_DRIVER=<driver> make run
+       i.e. something like: $ ENV_NETWORK="iw" ENV_DRIVER="cxgb4" make run
+Again, the ENV_NETWORK and ENV_DRIVER parameters are required.
+
+Executing this env_setup alone can be done either with the singlehost
+or multihost XML/XSL files provided in this directory.  If adding
+env_setup to any of your test cases, you can either specify it with
+CLIENTS/SERVERS roles or just a STANDALONE role.
+
+## Known Issues

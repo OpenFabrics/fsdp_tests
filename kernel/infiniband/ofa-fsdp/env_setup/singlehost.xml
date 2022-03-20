@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<jobConfig>
+  <name>RDMA environment setup for singlehost test</name>
+  <xslt>singlehost.xsl</xslt>
+  <arguments>
+    <arg section="recipe" type="string">
+      <name short="d">distro</name>
+      <metavar>DISTRO</metavar>
+      <tag type="attribute" attrname="name">distro</tag>
+      <default></default>
+      <description>OS distribution</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="t">tag</name>
+      <metavar>TAG</metavar>
+      <tag attrname="tag" type="attribute">distro</tag>
+      <default></default>
+      <description>OS distribution tag</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="f">family</name>
+      <metavar>FAMILY</metavar>
+      <tag type="attribute" attrname="family">distro</tag>
+      <default>RedHatEnterpriseLinux7</default>
+      <description>OS distribution family</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="v">variant</name>
+      <metavar>VARIANT</metavar>
+      <tag attrname="variant" type="attribute">distro</tag>
+      <default>Server</default>
+      <description>OS distribution variant</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="a">arch</name>
+      <metavar>ARCH</metavar>
+      <tag attrname="arch" type="attribute">distro</tag>
+      <default>x86_64</default>
+      <description>OS distribution Arch</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="s">server</name>
+      <metavar>SERVER</metavar>
+      <tag attrname="server" type="attribute">distro</tag>
+      <default>node-01.ofa.iol.unh.edu</default>
+      <description>1st machine</description>
+    </arg>
+    <!--
+         NOTE: this is a SINGLE HOST TEST.  This "machine2" flag exists
+         only so that automated scripts that submit a job with the "-n"
+         flag do not fail, nor do they have to make a special case for
+         single host tests.
+    -->
+    <arg section="recipe" type="string">
+      <name short="n">machine2</name>
+      <metavar>MACHINE2</metavar>
+      <tag attrname="machine2" type="attribute">distro</tag>
+      <default>node-02.ofa.iol.unh.edu</default>
+      <description>2nd machine</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="k">kickstart</name>
+      <metavar>KICKSTART</metavar>
+      <tag attrname="appends" type="attribute">kickstart</tag>
+      <default></default>
+      <description>kickstart appends</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="i">env_driver</name>
+      <metavar>ENV_DRIVER</metavar>
+      <tag attrname="driver" type="attribute">env</tag>
+      <default></default>
+      <description>driver to test over</description>
+    </arg>
+    <arg section="recipe" type="string">
+      <name short="e">env_network</name>
+      <metavar>ENV_NETWORK</metavar>
+      <tag attrname="network" type="attribute">env</tag>
+      <default></default>
+      <description>network to test over</description>
+    </arg>
+  </arguments>
+</jobConfig>
