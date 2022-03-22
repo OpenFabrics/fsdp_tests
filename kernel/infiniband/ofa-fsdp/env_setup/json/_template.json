@@ -1,0 +1,33 @@
+{
+    "full_hostname": "",
+    "arch": "",
+    "vendor": "",
+    "model": "",
+    "ci_enabled": "no",
+    "hcas": [
+        {
+            "name": "",
+            "name_short": "",
+            "pci_slot": "",
+            "driver": "",
+            "devices": [
+                {
+                    "hca_id": "",
+                    "port": "",
+                    "transport": "",
+                    "networks": [
+                        {
+                            "net": "",
+                            "device_id": ""
+                        },
+                        {
+                            "net": "",
+                            "device_id": ""
+                        }
+                    ],
+                    "mac": ""
+                }
+            ]
+        }
+    ]
+}

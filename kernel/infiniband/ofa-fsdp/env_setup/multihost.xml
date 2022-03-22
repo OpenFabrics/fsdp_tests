@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<jobConfig>
+  <name>FSDP demo of a simple RDMA test</name>
+  <xslt>multihost.xsl</xslt>
+    <arguments>
+      <arg section="recipe" type="string">
+        <name short="f">family</name>
+	<metavar>FAMILY</metavar>
+	<tag type="attribute" attrname="family">distro</tag>
+	<default>RedHatEnterpriseLinux8</default>
+	<description>OS distribution family</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="v">variant</name>
+	<metavar>VARIANT</metavar>
+	<tag type="attribute" attrname="variant">distro</tag>
+	<default>AppStream</default>
+	<description>OS distribution variant</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="d">distro</name>
+	<metavar>DISTRO</metavar>
+	<tag type="attribute" attrname="name">distro</tag>
+	<default>Red Hat Enterprise Linux 8.4</default>
+	<description>OS distribution</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="a">arch</name>
+	<metavar>ARCH</metavar>
+	<tag type="attribute" attrname="arch">distro</tag>
+	<default>x86_64</default>
+	<description>OS distribution arch</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="s">server</name>
+	<metavar>SERVER</metavar>
+	<tag type="attribute" attrname="server">distro</tag>
+	<default>node-09.ofa.iol.unh.edu</default>
+	<description>Test server FQDN</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="c">client</name>
+	<metavar>CLIENT</metavar>
+	<tag type="attribute" attrname="client">distro</tag>
+	<default>node-10.ofa.iol.unh.edu</default>
+	<description>Test client FQDN</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="k">kickstart</name>
+        <metavar>KICKSTART</metavar>
+        <tag attrname="appends" type="attribute">kickstart</tag>
+        <default></default>
+        <description>kickstart appends</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="i">env_driver</name>
+        <metavar>ENV_DRIVER</metavar>
+        <tag attrname="driver" type="attribute">env</tag>
+        <default></default>
+        <description>driver to test over</description>
+      </arg>
+      <arg section="recipe" type="string">
+        <name short="e">env_network</name>
+        <metavar>ENV_NETWORK</metavar>
+        <tag attrname="network" type="attribute">env</tag>
+        <default></default>
+        <description>network to test over</description>
+      </arg>
+    </arguments>
+</jobConfig>
