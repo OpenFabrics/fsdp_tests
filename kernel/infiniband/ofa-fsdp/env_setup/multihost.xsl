@@ -64,6 +64,7 @@
 	  <params/>
 	</task>
 	<task name="/kernel/infiniband/ofa-fsdp/env_setup" role="SERVERS">
+          <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/ofa-fsdp/env_setup"/>
 	  <params>
             <param name="ENV_DRIVER">
               <xsl:attribute name="value"><xsl:value-of select="env/@driver"/></xsl:attribute>
@@ -126,6 +127,7 @@
 	  <params/>
 	</task>
 	<task name="/kernel/infiniband/ofa-fsdp/env_setup" role="CLIENTS">
+          <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/ofa-fsdp/env_setup"/>
 	  <params>
             <param name="ENV_DRIVER">
               <xsl:attribute name="value"><xsl:value-of select="env/@driver"/></xsl:attribute>
