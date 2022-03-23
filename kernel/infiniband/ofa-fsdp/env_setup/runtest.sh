@@ -25,12 +25,25 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 trap "rm -f /mnt/testarea/env_setup-run_number.log; exit 1" SIGHUP SIGINT SIGQUIT SIGTERM
 
-# wget will not be installed by check-install task on rdma05/06
+export result="PASS"
+export test_base="$(pwd)"
+export s_hostname=$(hostname -s)
+export host_json="${test_base}/json/${s_hostname}.json"
+__bashrc_source=0
+__json_state=0
+
+# install wget
 which wget || yum -y install wget
 
 # Source the common test script helpers
 source /usr/bin/rhts_environment.sh
 source env_setup_functions.sh
+
+# let's make sure rdma-setup.sh was executed before
+_pub_key="/var/lib/tftpboot/${s_hostname}.pub"
+if [[ ! -e $_pub_key ]]; then
+    run_rdma_setup
+fi
 
 # Location of bashrc file to export env_setup variables from
 export BASHRC_FILE="${HOME}/.bashrc"
@@ -87,8 +100,8 @@ function common_setup {
         source "$parsed_FILE"
 
         # assign IPv4 and IPv6 variables
-        [[ -z "$RDMA_IPV4" ]] && RDMA_IPV4=$(RQA_get_my_ipv4 $DEVICE_ID)
-        RDMA_IPV6=$(RQA_get_my_ipv6 $DEVICE_ID)
+        [[ ! -z $DEVICE_ID ]] && [[ -z "$RDMA_IPV4" ]] && RDMA_IPV4=$(RQA_get_my_ipv4 $DEVICE_ID)
+        [[ ! -z $DEVICE_ID ]] && RDMA_IPV6=$(RQA_get_my_ipv6 $DEVICE_ID)
 
         # if this is SIW or RXE test on LOM_2 device,
         # make sure that the link-local IPv6 gets set for IPv6 address
@@ -250,13 +263,6 @@ function server {
     echo '--- server finishes.'
     rhts_sync_block -s "ES_CLIENT_DONE_${TNAME}-${ENV_NETWORK}-${RUN_NUMBER}" ${CLIENTS}
 }
-
-export result="PASS"
-export test_base="$(pwd)"
-export s_hostname=$(hostname -s)
-export host_json="${test_base}/json/${s_hostname}.json"
-__bashrc_source=0
-__json_state=0
 
 RQA_set_servers_clients
 
