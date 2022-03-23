@@ -404,3 +404,21 @@ function chelsio_siw_setup {
     ibv_devices
     ibv_devinfo
 }
+
+##
+# This function is to run rdma-setup.sh when
+# /var/lib/tftpboot/(hostname -s).pub doesn't exist
+##
+function run_rdma_setup {
+    # rdma-setup.sh executes Setup_Ssh & it creates ssh pub key
+    # this function is to be called when this key doesn't exist
+    # so execute it & reboot
+    if [[ ! -e /root/fsdp_setup/rdma-setup.sh ]]; then
+        cd /root/
+        git clone https://github.com/OpenFabrics/fsdp_setup.git
+        chmod +x /root/fsdp_setup/rdma-setup.sh
+    fi
+
+    bash /root/fsdp_setup/rdma-setup.sh 2>&1 > /root/fsdp_setup/rdma-setup.log
+    /usr/bin/rhts-reboot
+}
