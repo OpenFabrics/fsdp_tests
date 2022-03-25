@@ -595,13 +595,16 @@ function RQA_overall_result {
         # unset the test result file variable so future tests will use a new /tmp file
         __RQA_unset_test_result_file
         return 0
+    else
+        overall_result="FAIL"
     fi
 
     # some tests may define a variable $ON_FAIL that dictates whether or not to mark
     # a test case as SKIP if it fails; if we see it is set and == SKIP, mark it so
     if [[ ! -z "$ON_FAIL" && "$ON_FAIL" == "SKIP" ]]; then
         echo "  User explicitly requested test failures be SKIPPED - please review manually" >> $TEST_RESULT_FILE
-        report_result "${TEST}" "SKIP" 0
+        overall_result="SKIP"
+        report_result "${TEST}" "${overall_result}" 0
         rhts-submit-log -l $TEST_RESULT_FILE
         # unset the test result file variable so future tests will use a new /tmp file
         __RQA_unset_test_result_file
