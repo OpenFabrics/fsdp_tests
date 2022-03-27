@@ -44,7 +44,7 @@
         <partitions/>
         <task name="/distribution/check-install" role="STANDALONE"/>
         <task name="/kernel/infiniband/demo" role="STANDALONE">
-          <fetch url="https://github.com/OpenFabrics/fsdp_tests#infiniband/demo"/>
+	  <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/demo"/>
 	  <params/>
         </task>
         <task name="/distribution/reservesys" role="STANDALONE">
