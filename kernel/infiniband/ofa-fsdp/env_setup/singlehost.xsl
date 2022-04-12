@@ -3,7 +3,7 @@
   <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
 
   <xsl:template match="/submit">
-    <job retention_tag="scratch" group="ofa-users">
+    <job retention_tag="scratch">
       <whiteboard>
         <xsl:choose><xsl:when test="whiteboard = ''">RDMA environment setup for singlehost test
         </xsl:when><xsl:otherwise><xsl:value-of select="whiteboard"/>

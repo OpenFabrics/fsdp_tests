@@ -45,7 +45,7 @@ function get_ssh_pubkey {
         pushd /root/.ssh
         if ! grep $m authorized_keys; then
             echo "Adding ssh key for ${m}..."
-            tftp $m -c get ${m}.pub
+            tftp -4 $m -c get ${m}.pub
             cat ${m}.pub >> authorized_keys
             rm -f ${m}.pub
         fi

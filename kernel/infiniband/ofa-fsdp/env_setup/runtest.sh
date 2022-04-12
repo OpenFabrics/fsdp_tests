@@ -32,6 +32,9 @@ export host_json="${test_base}/json/${s_hostname}.json"
 __bashrc_source=0
 __json_state=0
 
+# link ./rdma-qa-functions.sh
+ln -s ${test_base}/rdma-qa-functions.sh ${HOME}/rdma-qa-functions.sh
+
 # install wget
 which wget || yum -y install wget
 
