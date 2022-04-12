@@ -40,8 +40,8 @@ source /usr/bin/rhts_environment.sh
 source env_setup_functions.sh
 
 # let's make sure rdma-setup.sh was executed before
-_pub_key="/var/lib/tftpboot/${s_hostname}.pub"
-if [[ ! -e $_pub_key ]]; then
+_rdma_setup="/root/fsdp_setup/rdma-setup.sh"
+if [[ ! -e $_rdma_setup ]]; then
     run_rdma_setup
 fi
 

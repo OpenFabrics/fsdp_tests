@@ -41,14 +41,17 @@ RQA_pkg_install dmidecode lshw environment-modules
 ##
 function get_ssh_pubkey {
     local __passed_host=$1
-
     for m in ${__passed_host}; do
-        echo "Adding ssh key for ${m}..."
         pushd /root/.ssh
-        tftp $m -c get ${m}.pub
-        cat ${m}.pub >> authorized_keys
-        rm -f ${m}.pub
-        ssh-keyscan -t ecdsa $m >> known_hosts
+        if ! grep $m authorized_keys; then
+            echo "Adding ssh key for ${m}..."
+            tftp $m -c get ${m}.pub
+            cat ${m}.pub >> authorized_keys
+            rm -f ${m}.pub
+        fi
+        if ! grep $m known_hosts; then
+            ssh-keyscan -t ecdsa $m >> known_hosts
+        fi
         popd
     done
 }
