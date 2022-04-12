@@ -28,7 +28,7 @@ trap "rm -f /mnt/testarea/sanity-run_number.log; exit 1" SIGHUP SIGINT SIGQUIT S
 # Source the common test script helpers
 source /usr/bin/rhts_environment.sh
 source /usr/bin/rhts_environment.sh
-source ../env_setup/rdma-qa-functions.sh
+source ${HOME}/rdma-qa-functions.sh
 
 # decide if we're running on RHTS or in developer mode
 RQA_rhts_or_dev_mode multi

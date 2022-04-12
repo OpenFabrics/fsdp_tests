@@ -1,7 +1,7 @@
 #!/bin/bash -x
 trap 'exit 1' SIGHUP SIGINT SIGQUIT SIGTERM
 
-source ../env_setup/rdma-qa-functions.sh
+source ${HOME}/rdma-qa-functions.sh
 
 ###### FUNCTIONS AND SETUP #########################################################
 
