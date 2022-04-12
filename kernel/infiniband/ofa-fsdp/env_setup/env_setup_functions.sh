@@ -45,7 +45,7 @@ function get_ssh_pubkey {
     for m in ${__passed_host}; do
         echo "Adding ssh key for ${m}..."
         pushd /root/.ssh
-        tftp $m -c get ${m}.pub
+        tftp -4 $m -c get ${m}.pub
         cat ${m}.pub >> authorized_keys
         rm -f ${m}.pub
         ssh-keyscan -t ecdsa $m >> known_hosts
