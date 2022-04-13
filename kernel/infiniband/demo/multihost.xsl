@@ -47,14 +47,20 @@
         </hostRequires>
         <partitions/>
         <task name="/distribution/check-install" role="STANDALONE"/>
+        <task name="/kernel/infiniband/ofa-fsdp/env_setup" role="SERVERS">
+          <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/ofa-fsdp/env_setup"/>
+          <params>
+            <param name="ENV_DRIVER">
+              <xsl:attribute name="value"><xsl:value-of select="env/@driver"/></xsl:attribute>
+            </param>
+            <param name="ENV_NETWORK">
+              <xsl:attribute name="value"><xsl:value-of select="env/@network"/></xsl:attribute>
+            </param>
+          </params>
+        </task>
         <task name="/kernel/infiniband/demo" role="SERVERS">
 	  <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/demo"/>
 	  <params/>
-        </task>
-        <task name="/distribution/reservesys" role="STANDALONE">
-          <params>
-            <param name="RESERVETIME" value="3600"/>
-          </params>
         </task>
       </recipe>
       <recipe role="CLIENTS" whiteboard="2nd machine" ks_meta="" kernel_options="" kernel_options_post="">
@@ -89,14 +95,20 @@
         </hostRequires>
         <partitions/>
         <task name="/distribution/check-install" role="STANDALONE"/>
+        <task name="/kernel/infiniband/ofa-fsdp/env_setup" role="CLIENTS">
+          <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/ofa-fsdp/env_setup"/>
+          <params>
+            <param name="ENV_DRIVER">
+              <xsl:attribute name="value"><xsl:value-of select="env/@driver"/></xsl:attribute>
+            </param>
+            <param name="ENV_NETWORK">
+              <xsl:attribute name="value"><xsl:value-of select="env/@network"/></xsl:attribute>
+            </param>
+          </params>
+        </task>
         <task name="/kernel/infiniband/demo" role="CLIENTS">
 	  <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/demo"/>
 	  <params/>
-        </task>
-        <task name="/distribution/reservesys" role="STANDALONE">
-          <params>
-            <param name="RESERVETIME" value="3600"/>
-          </params>
         </task>
       </recipe>
     </recipeSet>
