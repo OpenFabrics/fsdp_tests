@@ -87,8 +87,8 @@ function common_setup {
     RDMA_DRIVER=$(RQA_get_driver_name $RDMA_DRIVER)
 
     # run the JSON parser for this host
-    bash ./host_data_parser.sh "$host_json" ENV_DRIVER=${RDMA_DRIVER} \
-            ENV_NETWORK=${RDMA_NETWORK} | tee $parsed_FILE
+    $PYEXEC ./host_data_parser.py "$host_json" "${RDMA_DRIVER}" \
+            "${RDMA_NETWORK}" | tee $parsed_FILE
     local __json_state=$?
 
     RQA_check_result -r  $__json_state -t "JSON parser"
