@@ -63,8 +63,8 @@
 	<task name="/distribution/check-install" role="STANDALONE">
 	  <params/>
 	</task>
-	<task name="/kernel/infiniband/ofa-fsdp/env_setup" role="STANDALONE">
-          <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/ofa-fsdp/env_setup"/>
+	<task name="/kernel/infiniband/env_setup" role="STANDALONE">
+          <fetch url="https://github.com/OpenFabrics/fsdp_tests/archive/refs/heads/main.zip#kernel/infiniband/env_setup"/>
 	  <params>
             <param name="ENV_DRIVER">
               <xsl:attribute name="value"><xsl:value-of select="env/@driver"/></xsl:attribute>
