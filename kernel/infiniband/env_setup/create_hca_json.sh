@@ -1,7 +1,7 @@
 #!/bin/bash -x
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   runtest.sh of /kernel/infiniband/ofa-fsdp/env_setup
+#   runtest.sh of /kernel/infiniband/env_setup
 #   Description: assists in generating hcas json files for  RDMA cluster
 #                test environment
 #   Author: Afom Michael <tmichael@redhat.com>

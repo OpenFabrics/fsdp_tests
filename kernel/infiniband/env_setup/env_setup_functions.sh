@@ -2,7 +2,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   env_setup_functions.sh of /kernel/infiniband/ofa-fsdp/env_setup
+#   env_setup_functions.sh of /kernel/infiniband/env_setup
 #   Description: prepare RDMA cluster test environment
 #   Author: Afom Michael <tmichael@redhat.com>
 #

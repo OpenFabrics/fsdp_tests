@@ -1,7 +1,7 @@
 #!/bin/bash
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   rdma-qa-functions.sh of /kernel/infiniband/ofa-fsdp/env_setup
+#   rdma-qa-functions.sh of /kernel/infiniband/env_setup
 #   Description: prepare RDMA cluster test environment
 #   Author: Afom Michael <tmichael@redhat.com>
 #
@@ -731,7 +731,7 @@ function RQA_get_driver_name {
 }
 
 ##
-# Checks to see if /kernel/infiniband/ofa-fsdp/env_setup was run on this machine.
+# Checks to see if /kernel/infiniband/env_setup was run on this machine.
 # Only to be used when doing manual testing, as this function will prompt
 # for user interaction
 # Arguments: none
@@ -748,7 +748,7 @@ function RQA_check_env_setup {
         echo
         echo "###################################################################"
         echo "##                                                               ##"
-        echo "## This test case requires /kernel/infiniband/ofa-fsdp/env_setup ##"
+        echo "## This test case requires /kernel/infiniband/env_setup ##"
         echo "## to run first, but it appears it has not run on this           ##"
         echo "## host yet.  Please enter a driver and network to test          ##"
         echo "## over (or leave blank for default values).                     ##"
@@ -761,8 +761,8 @@ function RQA_check_env_setup {
     read -p "Enter a driver to test over (blank for default): " _driver
     read -p "Enter a network to test over (blank for default): " _network
 
-    RQA_pkg_install kernel-kernel-infiniband-ofa-fsdp-env_setup
-    cd /mnt/tests/kernel/infiniband/ofa-fsdp/env_setup
+    RQA_pkg_install kernel-kernel-infiniband-env_setup
+    cd /mnt/tests/kernel/infiniband/env_setup
     ENV_DRIVER="$_driver" ENV_NETWORK="$_network" make run
     cd - >/dev/null
 }

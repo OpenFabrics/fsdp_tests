@@ -1,7 +1,7 @@
 #!/bin/bash -x
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   host_data_parser.sh of /kernel/infiniband/ofa-fsdp/env_setup
+#   host_data_parser.sh of /kernel/infiniband/env_setup
 #   Description: Read in JSON configuration files for hosts in the
 #                OFA FSDP RDMA cluster and provide the following
 #                details regarding the executing host:
