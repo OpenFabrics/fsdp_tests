@@ -1,7 +1,7 @@
 #!/bin/bash
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   clean_env.sh of /kernel/infiniband/ofa-fsdp/env_setup
+#   clean_env.sh of /kernel/infiniband/env_setup
 #   Description: prepare RDMA cluster test environment
 #   Author: Mike Stowell <mstowell@redhat.com>
 #           Afom Michael <tmichael@redhat.com>

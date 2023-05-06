@@ -28,8 +28,8 @@ to add the following flags to bkr workflow-xslt commands:
    -i <driver> -e <network>
 
 If running this case manually, you should:
-  * Change directory to /mnt/tests/kernel/infiniband/ofa-fsdp/env_setup:
-      $ cd /mnt/tests/kernel/infiniband/ofa-fsdp/env_setup
+  * Change directory to /mnt/tests/kernel/infiniband/env_setup:
+      $ cd /mnt/tests/kernel/infiniband/env_setup
   * Either define CLIENTS and SERVERS in your .bashrc or from the command line, eg:
       $ export SERVERS="node-01"
       $ export CLIENTS="node-02"

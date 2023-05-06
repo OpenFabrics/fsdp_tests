@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Makefile of /kernel/infiniband/ofa-fsdp/env_setup
+#   Makefile of /kernel/infiniband/env_setup
 #   Description: prepare RDMA cluster test environment dynamically
 #   Author: Afom Michael <tmichael@redhat.com>
 #
@@ -23,7 +23,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-export TEST=/kernel/infiniband/ofa-fsdp/env_setup
+export TEST=/kernel/infiniband/env_setup
 export TESTVERSION=0.1
 
 BUILT_FILES=

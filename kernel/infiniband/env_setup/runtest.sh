@@ -1,7 +1,7 @@
 #!/bin/bash -x
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   runtest.sh of /kernel/infiniband/ofa-fsdp/env_setup
+#   runtest.sh of /kernel/infiniband/env_setup
 #   Description: prepare RDMA cluster test environment
 #   Author: Afom Michael <tmichael@redhat.com>
 #
@@ -125,7 +125,7 @@ function common_setup {
         echo "export RDMA_IPV6=\"${RDMA_IPV6}\"" >> $parsed_FILE
     fi
 
-    echo -en "\n# /kernel/infiniband/ofa-fsdp/env_setup variables\n" >> $BASHRC_FILE
+    echo -en "\n# /kernel/infiniband/env_setup variables\n" >> $BASHRC_FILE
     if [[ -s $parsed_FILE ]] && grep "export" $parsed_FILE >/dev/null; then
         cat >> $BASHRC_FILE < $parsed_FILE
     fi
