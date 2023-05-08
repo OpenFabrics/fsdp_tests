@@ -1,0 +1,10 @@
+Owner:           Afom Michael <tmichael@redhat.com>
+Name:            /kernel/infiniband/sanity
+TestVersion:     0.1
+Path:            /mnt/tests/kernel/infiniband/sanity
+Description:     sanity test for Linux kernel RDMA subsystem on OFA FSDP Cluster
+Type:            sanity
+RunFor:          sanity
+Priority:        Normal
+License:         GPLv2+
+Destructive:     no

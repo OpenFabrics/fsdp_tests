@@ -42,7 +42,7 @@ PS4='$(date +"+ [%y-%m-%d %H:%M:%S]") '
 
 source /root/fsdp_setup/rdma-functions.sh
 
-## functions #################################################################
+###### FUNCTIONS AND SETUP ###################################################
 
 ##
 # This function is to install a package(s) if it isn't already installed
@@ -85,7 +85,7 @@ function RQA_sys_service {
         esac
         shift
     done
-    if [ $(RQA_get_rhel_major) -ge 7 ]; then
+    if [ $RELEASE -ge 7 ]; then
         /usr/bin/systemctl $action $serv
         SERVICE_RETURN=$?
     else
@@ -232,7 +232,7 @@ function RQA_bring_up_network {
         RQA_sys_service status opensm
         if [ $? -ne 0 ]; then
             # if opensm is not started, restart the network
-            if [ $(RQA_get_rhel_major) -ge 7 ]; then
+            if [ $RELEASE -ge 7 ]; then
                 RQA_sys_service restart NetworkManager.service
             else
                 RQA_sys_service restart network
@@ -258,7 +258,7 @@ function RQA_bring_up_network {
 }
 
 ##
-# Per bz1537600: if using RHEL-7.5+, CONNECTED_MODE=yes in an mlx5/ib0 ifcfg
+# Per RedHat Bugzilla 1537600: if using RHEL-7.5+, CONNECTED_MODE=yes in an mlx5/ib0 ifcfg
 # will cause the interface to fail to bring up, unless we otherwise reload the
 # ib_ipoib module with ipoib_enhanced=0.  We will simply disable connected mode
 # as the drivers no longer support it, and we want to test ipoib_enhanced in
@@ -269,8 +269,8 @@ function RQA_bring_up_network {
 ##
 function RQA_fix_mlx5_ib_connected_mode {
     # only apply to 7.5+ or 8.y+
-    if [[ $(RQA_get_rhel_major) -ge 7 && $(RQA_get_rhel_minor) -ge 5 ]] || \
-        [[ $(RQA_get_rhel_major) -gt 7 ]]; then
+    if [[ $RELEASE -ge 7 && $(RQA_get_rhel_minor) -ge 5 ]] || \
+        [[ $RELEASE -gt 7 ]]; then
         for mlx_ifcfg in $(ls /etc/sysconfig/network-scripts/ | grep mlx5 | grep ib | grep -v '~'); do
             # some ifcfgs (like ib1) do not define CONNECTED_MODE; since it defaults to 'no',
             # search only for CONNECTED_MODE=yes
@@ -933,11 +933,131 @@ function RQA_set_pyexec {
     fi
 }
 
+##
+# If this host has been set up with a /mnt/rdma-xfs partition in the XSL file,
+# return the xfs block device rdma-xfs is mounted on.
+# Arguments: 1 = IP
+# Example: RQA_get_block_dev_xfs $SERVER_IPV4
+##
+function RQA_get_block_dev_xfs {
+    ssh $1 df -h | grep "/mnt/rdma-xfs" | awk '{print $1}'
+}
+
+##
+# This function is to calculate a reasonable RAM size from available ram space
+# to be used for nfsordma, iSER, SRP tests
+# Argument: none
+##
+function RQA_get_server_free_ram {
+    # get server's free portion of RAM
+    local server_free_ram=$(free -g | awk  '/Mem:/ {print $4}')
+
+    if ((server_free_ram < 16)); then
+        # use 50% of server_free_ram
+        server_free_ram=$((server_free_ram * 50/100))
+    elif ((server_free_ram < 32)); then
+        # use 60% of server_free_ram
+        server_free_ram=$((server_free_ram * 60/100))
+    elif ((server_free_ram < 64)); then
+        # use 70% of server_free_ram
+        server_free_ram=$((server_free_ram * 70/100))
+    elif ((server_free_ram < 128)); then
+        # use 75% of server_free_ram
+        server_free_ram=$((server_free_ram * 75/100))
+    else
+        # use 80% of server_free_ram
+        server_free_ram=$((server_free_ram * 80/100))
+    fi
+
+    # limit max server_free_ram to 128GB
+    if (( server_free_ram >= 128)); then
+        server_free_ram=128
+    fi
+
+    echo "${server_free_ram}"
+}
+
+##
+# This function is to create ramdisk directory for nfsordma, iSER, SRP
+# Argument: one, i.e. mount point where ramdisk is to be created
+# eg. RQA_create_ramdisk "/srv/nfs"
+##
+function RQA_create_ramdisk {
+    local l_nfsxprt="$1"
+    local mnt_tmpfs=0
+    local ram_free_size=$(RQA_get_server_free_ram)
+
+    [ -d ${l_nfsxprt} ] && rm -rf "${l_nfsxprt}"
+    mkdir -p $l_nfsxprt
+    mount -t tmpfs -o size=${ram_free_size}g tmpfs $l_nfsxprt
+    mnt_tmpfs=$?
+
+    return $mnt_tmpfs
+}
+
+##
+# This function is to delete ramdisk mounted tmpfs by umounting
+# Arguments: one, i.e. mount point of ramdisk
+# eg. RQA_del_ramdisk "/mnt/ramdisk"
+##
+function RQA_del_ramdisk {
+    local tmpfs_d="$1"
+    local umnt_tmpfs=0
+    local _tmpfs_exists=$(mount | grep ${tmpfs_d} | awk '{print $3}')
+    if [[ ! -z $_tmpfs_exists ]]; then
+        sleep 5s
+        umount "$tmpfs_d"
+        umnt_tmpfs=$?
+    fi
+
+    return $umnt_tmpfs
+}
+
+##
+# Exports the PERFTEST_FLAGS variable set depending on the network/driver
+# under test.
+# Arguments: none
+##
+function RQA_set_perftest_flags {
+    # -R / -x 0:
+    #   iWARP: cxgb4, qedr, and irdma devices need to use rdma_cm QP's
+    #   RoCE/IB/OPA: not always guaranteed the correct GID index will be specified
+    #                on the client/server, so we can either use '-x 0' or '-R' (RedHat Bugzilla 1468589),
+    #                where -R is more desirable
+    # -F:
+    #   suppress CPU frequency warnings when cpu-freq is not max
+    # -d $HCA_ID:
+    #   all tests should specify the device to avoid incorrect one being selected
+    # -p $DEVICE_PORT:
+    #   all tests should specify the port to avoid incorrect one being selected
+    PERFTEST_FLAGS="-d $HCA_ID -i $DEVICE_PORT -F"
+    if [[ "$RDMA_DRIVER" == "mlx4" && "$RDMA_NETWORK" == "roce" ]]; then
+        # mlx4/RoCE interfaces give "wr_id 0 syndrom 0x81" with rdmacm; use ethernet exchange
+        PERFTEST_FLAGS="$PERFTEST_FLAGS -x 0"
+    else
+        PERFTEST_FLAGS="$PERFTEST_FLAGS -R"
+    fi
+    export PERFTEST_FLAGS
+}
+
+##
+# If using a non-mlx4 machine, disables the inline default feature as
+# Arguments: none
+##
+function RQA_set_inline_default {
+    if [[ "$RDMA_DRIVER" != *"mlx4"* ]]; then
+        mkdir -p /etc/rdma/rsocket
+        echo 0 > /etc/rdma/rsocket/inline_default
+    fi
+}
+
 # determine whether to use yum or dnf
-if [[ $(grep -i fedora /etc/redhat-release >/dev/null) || $(RQA_get_rhel_major) -ge 8 ]]; then
+if [[ $OS == "fedora" || $RELEASE -ge 8 ]]; then
     export PKGINSTALL="dnf install -y --setopt=strict=0 --nogpgcheck"
     export PKGREMOVE="dnf remove --noautoremove -y"
 else
     export PKGINSTALL="yum install -y --skip-broken --nogpgcheck"
     export PKGREMOVE="yum remove -y"
 fi
+
+###### END OF FUNCTIONS AND SETUP ###################################################

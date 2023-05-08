@@ -14,7 +14,7 @@ function RQA_set_perftest_flags {
     # -R / -x 0:
     #   iWARP: cxgb3, cxgb4, and i40iw devices need to use rdma_cm QP's
     #   RoCE/IB/OPA: not always guaranteed the correct GID index will be specified
-    #                on the client/server, so we can either use '-x 0' or '-R' (bz1468589),
+    #                on the client/server, so we can either use '-x 0' or '-R' (RedHat Bugzilla 1468589),
     #                where -R is more desirable
     # -F:
     #   suppress CPU frequency warnings when cpu-freq is not max
@@ -34,7 +34,7 @@ function RQA_set_perftest_flags {
 
 ##
 # If using a non-mlx4 machine, disables the inline default feature as
-# per bz1028906#c1
+# per RedHat Bugzilla 1028906 Comment c1
 # Arguments: none
 ##
 function RQA_set_inline_default {
@@ -112,7 +112,7 @@ function common_tests {
         fi
     fi
 
-    # pkey 0x8080 and vlan 81 creation/deletion test (RHEL-7.7/RHEL-8.0+: see bz1659075)
+    # pkey 0x8080 and vlan 81 creation/deletion test (RHEL-7.7/RHEL-8.0+: RedHat Bugzilla 1659075)
     if [[ $(RQA_get_rhel_major) -ge 8 || \
         ( $(RQA_get_rhel_major) -eq 7 && $(RQA_get_rhel_minor) -ge 7 ) ]]; then
         if [[ "$RDMA_NETWORK" == "ib0" || "$RDMA_NETWORK" == "ib1" || "$RDMA_NETWORK" == "opa0" ]]; then
@@ -143,7 +143,7 @@ function common_tests {
 
     # simple infiniband-diags cases to run on both server and client
     if [[ "$RDMA_NETWORK" != *"iw"* ]]; then
-        # not supported on iWARP (bz752570)
+        # not supported on iWARP (RedHat Bugzilla 752570)
         /usr/sbin/ibstat
         RQA_check_result -r $? -t "/usr/sbin/ibstat"
     fi
