@@ -1,0 +1,75 @@
+## Purpose
+
+This is a smoke test for Linux kernel RDMA subsystem that can be executed
+on any pair of machines, for instance in the OFA FSDP RDMA cluster.
+
+You can run this program several ways:
+
+  1) Submit via Beaker cli [RECOMMENDED]
+
+      $  bkr workflow-xslt --job-xml=sanity.xml -d <distro> \
+          -f <family> -a <arch> -m <machine1> -n <machine2>
+          [-e <network>] [-i <kernel_module>]
+
+  2) Run on manually provisioned machines by installing from the
+     beaker-tasks repo
+
+       $ yum install -y *infiniband-sanity
+       $ cd /mnt/tests/kernel/infiniband/sanity
+       $ [ENV_NETWORK=<network>] [ENV_DRIVER=<kernel_module>] make run
+       <follow the prompts on each machine>
+
+       where <NETWORK> can be one of {ib0, ib1, roce, iw, opa0} and
+       <kernel_module> can be one of mlx5, mlx4, bnxt_re, cxgb4, qedr, hfi1.
+
+The server and client machines will output a report at the end
+of the test run containing all the tests run and whether they
+passed or failed.  A sample report may look like the following:
+#############################################################################
+sanity test results on rdma-qe-42/rdma-qe-43 & Beaker job J:7533082:
+4.18.0-458.el8.x86_64, rdma-core-44.0-2.el8.1, mlx5, ib0, ConnectX-6 & mlx5_0
+    Result | Status | Test
+  ---------+--------+------------------------------------
+      PASS |      0 | load module mlx5_ib
+      PASS |      0 | load module mlx5_core
+      PASS |      0 | enable opensm
+      PASS |      0 | restart opensm
+      PASS |      0 | osmtest -f c -g 0xb8cef6030079d00e
+      PASS |      0 | stop opensm
+      PASS |      0 | disable opensm
+      PASS |      0 | ibstatus reported expected HCA rate
+      PASS |      0 | pkey mlx5_ib0.8080 create/delete
+      PASS |      0 | /usr/sbin/ibstat
+      PASS |      0 | /usr/sbin/ibstatus
+      PASS |      0 | systemctl start srp_daemon.service
+      PASS |      0 | /usr/sbin/ibsrpdm -vc
+      PASS |      0 | systemctl stop srp_daemon
+      PASS |      0 | ping self - 172.31.0.43
+      PASS |      0 | ping6 self - fe80::bace:f603:79:d00e%mlx5_ib0
+      PASS |      0 | /usr/share/pmix/test/pmix_test
+      PASS |      0 | ping server - 172.31.0.42
+      PASS |      0 | ping6 server - fe80::bace:f603:79:d01e%mlx5_ib0
+      PASS |      0 | openmpi mpitests-IMB-MPI1 PingPong
+      PASS |      0 | openmpi mpitests-IMB-IO S_Read_indv
+      PASS |      0 | openmpi mpitests-IMB-EXT Window
+      PASS |      0 | openmpi mpitests-osu_get_bw
+      PASS |      0 | ip multicast addr
+      PASS |      0 | rping
+      PASS |      0 | rcopy
+      PASS |      0 | ib_read_bw
+      PASS |      0 | ib_send_bw
+      PASS |      0 | ib_write_bw
+      PASS |      0 | iser login
+      PASS |      0 | mount /dev/sdb /iser
+      PASS |      0 | iser write 1K
+      PASS |      0 | iser write 1M
+      PASS |      0 | iser write 1G
+      PASS |      0 | nfsordma mount - XFS_EXT
+      PASS |      0 | nfsordma - wrote [5KB, 5MB, 5GB in 1KB, 1MB, 1GB bs]
+      PASS |      0 | nfsordma umount - XFS_EXT
+      PASS |      0 | nfsordma mount - RAMDISK
+      PASS |      0 | nfsordma - wrote [5KB, 5MB, 5GB in 1KB, 1MB, 1GB bs]
+      PASS |      0 | nfsordma umount - RAMDISK
+Checking for failures and known issues:
+  no test failures
+#############################################################################
