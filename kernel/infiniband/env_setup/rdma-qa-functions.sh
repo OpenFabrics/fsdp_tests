@@ -362,8 +362,8 @@ function RQA_rhts_or_dev_mode {
         if [ -z ${REBOOTCOUNT+x} ]; then REBOOTCOUNT=0; fi
         if [[ -z "$2" || "$2" != "env" ]]; then
             RQA_check_env_setup
-            TEST_NAME=$(echo $TEST | sed -r 's/\/kernel\/infiniband\///; \
-		    s/ofa-fsdp\///; s/\/server//; s/\/client//; s/\/standalone//')
+            TEST_NAME=$(echo $TEST | sed -r "s/\/kernel\/infiniband\///; \
+		    s/ofa-fsdp\///; s/\/server//; s/\/client//; s/\/standalone//")
             # sub '/' by '_'
             export TNAME=$(echo $TEST_NAME | sed 's/\//_/g')
         else

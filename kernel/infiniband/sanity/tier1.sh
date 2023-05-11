@@ -480,6 +480,7 @@ function client_tests {
     fi
 
     # NFSoRDMA tests
+    local nfsordma_mnt_pt="/srv/nfs"
     local nfs_dir="/srv/nfs"
     local ramdisk_mnt=1
 
@@ -494,9 +495,8 @@ function client_tests {
     fi
 
     for fs_type in XFS_EXT RAMDISK; do
-        [ -d $nfs_dir ] || mkdir -p $nfs_dir
-        rhts_sync_block -s "nfsordma-server-ready_${TNAME}-${RDMA_NETWORK}-${fs_type}_${RUN_NUMBER}" ${SERVERS}
         [ -d ${nfsordma_mnt_pt} ] || mkdir -p ${nfsordma_mnt_pt}
+        rhts_sync_block -s "nfsordma-server-ready_${TNAME}-${RDMA_NETWORK}-${fs_type}_${RUN_NUMBER}" ${SERVERS}
         RQA_sys_service nfs-client.target enable
         showmount -e ${SERVER_IPV4}
         timeout 3m mount -v -o rdma,port=20049 ${SERVER_IPV4}:${nfs_dir} ${nfsordma_mnt_pt}
